@@ -2,6 +2,7 @@ import React from 'react';
 import type { MockupConfig } from '../../types';
 import { WindowControls } from './WindowControls';
 import { ChevronLeft, ChevronRight, RotateCw, Lock, Share2, Plus, Sidebar } from 'lucide-react';
+import { getContrastColor } from '../../utils/colorUtils';
 
 interface FrameProps {
   config: MockupConfig;
@@ -9,7 +10,9 @@ interface FrameProps {
 }
 
 export const SafariFrame: React.FC<FrameProps> = ({ config, children }) => {
-  const isDark = config.themeMode === 'dark';
+  const isCustom = config.themeMode === 'custom';
+  const customBg = config.customTabColor || '#2563eb';
+  const isDark = config.themeMode === 'dark' || (isCustom && getContrastColor(customBg) === 'light');
 
   return (
     <div
@@ -20,8 +23,11 @@ export const SafariFrame: React.FC<FrameProps> = ({ config, children }) => {
       {/* Top Header */}
       <div
         className={`px-4 py-2.5 flex items-center justify-between gap-3 border-b select-none ${
-          isDark ? 'bg-[#282830] border-black/30' : 'bg-[#e4e4e9] border-black/10'
+          isCustom
+            ? isDark ? 'border-black/30' : 'border-black/10'
+            : isDark ? 'bg-[#282830] border-black/30' : 'bg-[#e4e4e9] border-black/10'
         }`}
+        style={isCustom ? { backgroundColor: customBg } : undefined}
       >
         {/* Left Section: Window Controls & Sidebar toggle */}
         <div className="flex items-center space-x-3 shrink-0">
@@ -41,14 +47,18 @@ export const SafariFrame: React.FC<FrameProps> = ({ config, children }) => {
         {config.showUrlBar ? (
           <div
             className={`flex-1 max-w-xl mx-auto h-8 rounded-lg px-3 flex items-center justify-between text-xs transition-all shadow-inner ${
-              isDark
+              isCustom
+                ? isDark
+                  ? 'bg-black/20 text-gray-100 border border-white/10'
+                  : 'bg-white/80 text-gray-900 border border-black/10 shadow-xs'
+                : isDark
                 ? 'bg-[#18181c] text-gray-300 border border-white/5'
                 : 'bg-white text-gray-700 border border-black/5 shadow-xs'
             }`}
           >
             <div className="flex items-center space-x-2 truncate min-w-0">
               {config.showLockIcon && (
-                <Lock className="w-3 h-3 text-emerald-500 shrink-0" />
+                <Lock className={`w-3 h-3 shrink-0 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
               )}
               <span className="truncate font-mono tracking-tight">{config.url}</span>
             </div>

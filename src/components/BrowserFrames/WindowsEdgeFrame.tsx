@@ -9,6 +9,7 @@ import {
   Compass,
   MoreHorizontal,
 } from 'lucide-react';
+import { getContrastColor } from '../../utils/colorUtils';
 
 interface FrameProps {
   config: MockupConfig;
@@ -16,21 +17,26 @@ interface FrameProps {
 }
 
 export const WindowsEdgeFrame: React.FC<FrameProps> = ({ config, children }) => {
-  const isDark = config.themeMode === 'dark';
+  const isCustom = config.themeMode === 'custom';
+  const customBg = config.customTabColor || '#2563eb';
+  const isDark = config.themeMode === 'dark' || (isCustom && getContrastColor(customBg) === 'light');
 
   return (
     <div
-      className={`w-full overflow-hidden flex flex-col transition-colors duration-200 border bg-transparent ${
+      className={`w-full overflow-hidden flex flex-col transition-colors duration-200 bg-transparent ${
         isDark
-          ? 'text-gray-200 border-gray-800'
-          : 'text-gray-800 border-gray-300'
+          ? 'text-gray-200'
+          : 'text-gray-800'
       }`}
     >
       {/* Title Bar & Windows Controls */}
       <div
         className={`px-3 py-1.5 flex items-center justify-between border-b select-none ${
-          isDark ? 'bg-[#2b2b2f] border-black/30' : 'bg-[#e5e5e5] border-black/10'
+          isCustom
+            ? isDark ? 'border-black/30' : 'border-black/10'
+            : isDark ? 'bg-[#2b2b2f] border-black/30' : 'bg-[#e5e5e5] border-black/10'
         }`}
+        style={isCustom ? { backgroundColor: customBg } : undefined}
       >
         <div className="flex items-center space-x-2 text-xs font-semibold">
           <Compass className="w-3.5 h-3.5 text-blue-500" />
@@ -50,8 +56,11 @@ export const WindowsEdgeFrame: React.FC<FrameProps> = ({ config, children }) => 
       {/* Edge Address & Nav Bar */}
       <div
         className={`px-3 py-1.5 flex items-center justify-between gap-2 border-b select-none ${
-          isDark ? 'bg-[#202024] border-black/20' : 'bg-white border-black/10'
+          isCustom
+            ? isDark ? 'border-black/20' : 'border-black/10'
+            : isDark ? 'bg-[#202024] border-black/20' : 'bg-white border-black/10'
         }`}
+        style={isCustom ? { backgroundColor: customBg } : undefined}
       >
         {config.showNavButtons && (
           <div className="flex items-center space-x-1 opacity-70 shrink-0">
@@ -64,7 +73,11 @@ export const WindowsEdgeFrame: React.FC<FrameProps> = ({ config, children }) => 
         {config.showUrlBar ? (
           <div
             className={`flex-1 mx-2 h-7 rounded-md px-3 flex items-center justify-between text-xs transition-colors border ${
-              isDark
+              isCustom
+                ? isDark
+                  ? 'bg-black/25 text-gray-100 border-white/10'
+                  : 'bg-white/80 text-gray-900 border-black/10'
+                : isDark
                 ? 'bg-[#1b1b1f] text-gray-200 border-white/10'
                 : 'bg-[#f9f9f9] text-gray-800 border-gray-300'
             }`}

@@ -10,6 +10,7 @@ import {
   Flame,
   Plus,
 } from 'lucide-react';
+import { getContrastColor } from '../../utils/colorUtils';
 
 interface FrameProps {
   config: MockupConfig;
@@ -17,7 +18,9 @@ interface FrameProps {
 }
 
 export const BraveFrame: React.FC<FrameProps> = ({ config, children }) => {
-  const isDark = config.themeMode === 'dark';
+  const isCustom = config.themeMode === 'custom';
+  const customBg = config.customTabColor || '#2563eb';
+  const isDark = config.themeMode === 'dark' || (isCustom && getContrastColor(customBg) === 'light');
 
   return (
     <div
@@ -28,8 +31,11 @@ export const BraveFrame: React.FC<FrameProps> = ({ config, children }) => {
       {/* Top Header */}
       <div
         className={`px-3 py-2 flex items-center justify-between gap-3 border-b select-none ${
-          isDark ? 'bg-[#22242f] border-orange-500/20' : 'bg-white border-black/10'
+          isCustom
+            ? isDark ? 'border-orange-500/20' : 'border-black/10'
+            : isDark ? 'bg-[#22242f] border-orange-500/20' : 'bg-white border-black/10'
         }`}
+        style={isCustom ? { backgroundColor: customBg } : undefined}
       >
         <div className="flex items-center space-x-3 shrink-0">
           {config.showControls && (
@@ -48,7 +54,11 @@ export const BraveFrame: React.FC<FrameProps> = ({ config, children }) => {
         {config.showUrlBar ? (
           <div
             className={`flex-1 max-w-xl mx-auto h-8 rounded-lg px-3 flex items-center justify-between text-xs transition-colors border ${
-              isDark
+              isCustom
+                ? isDark
+                  ? 'bg-black/25 text-gray-100 border-orange-500/30 shadow-xs'
+                  : 'bg-white/80 text-gray-900 border-black/10 shadow-xs'
+                : isDark
                 ? 'bg-[#191a21] text-gray-200 border-orange-500/30 shadow-xs'
                 : 'bg-[#f4f5f7] text-gray-800 border-black/10'
             }`}

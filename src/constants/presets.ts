@@ -130,6 +130,7 @@ export const DEFAULT_MOCKUP_CONFIG: MockupConfig = {
 
   browserType: "safari",
   themeMode: "dark",
+  customTabColor: "#2563eb",
   url: "https://app.evident.ai/dashboard",
   title: "Evident — Next-Gen AI Platform",
   showUrlBar: true,
@@ -246,6 +247,21 @@ export const QUICK_PRESETS: {
       windowRadius: 8,
       paddingX: 56,
       paddingY: 56,
+    },
+  },
+  {
+    name: "Custom Vibrant Color",
+    iconName: "Palette",
+    config: {
+      browserType: "safari",
+      themeMode: "custom",
+      customTabColor: "#4f46e5",
+      controlsStyle: "mac",
+      gradientPreset: "neon",
+      shadowStyle: "heavy",
+      windowRadius: 16,
+      paddingX: 64,
+      paddingY: 64,
     },
   },
 ];
