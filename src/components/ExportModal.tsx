@@ -1,7 +1,7 @@
-import React from 'react';
-import type { MockupConfig, ExportFormat, ExportSizePresetId } from '../types';
-import { EXPORT_SIZE_PRESETS } from '../constants/presets';
-import { Download, Copy, X, Check, Sparkles, Layers, Sliders, Monitor } from 'lucide-react';
+import { Check, Copy, Download, Monitor, Sparkles, X } from "lucide-react";
+import React from "react";
+import { EXPORT_SIZE_PRESETS } from "../constants/presets";
+import type { ExportFormat, ExportSizePresetId, MockupConfig } from "../types";
 
 interface ExportModalProps {
   isOpen: boolean;
@@ -37,12 +37,12 @@ export const ExportModal: React.FC<ExportModalProps> = ({
       return `${w} × ${h} px`;
     }
     const defaultWidths: Record<number, string> = {
-      1: '1280 × 720 px',
-      2: '2560 × 1440 px',
-      3: '3840 × 2160 px',
-      4: '7680 × 4320 px',
+      1: "1280 × 720 px",
+      2: "2560 × 1440 px",
+      3: "3840 × 2160 px",
+      4: "7680 × 4320 px",
     };
-    return defaultWidths[scale] || '2560 × 1440 px';
+    return defaultWidths[scale] || "2560 × 1440 px";
   };
 
   const handleCopy = () => {
@@ -62,7 +62,9 @@ export const ExportModal: React.FC<ExportModalProps> = ({
             </div>
             <div>
               <h2 className="text-base font-bold text-white">Download Mockup Image</h2>
-              <p className="text-xs text-gray-400">Select output resolution size and image format</p>
+              <p className="text-xs text-gray-400">
+                Select output resolution size and image format
+              </p>
             </div>
           </div>
           <button
@@ -99,16 +101,20 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                     }
                     className={`p-3.5 rounded-xl border text-left flex flex-col justify-between gap-2 transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-indigo-600/20 border-indigo-500 text-white shadow-lg shadow-indigo-500/10'
-                        : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:text-white'
+                        ? "bg-indigo-600/20 border-indigo-500 text-white shadow-lg shadow-indigo-500/10"
+                        : "bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <Monitor className={`w-4 h-4 ${isSelected ? 'text-indigo-400' : 'text-gray-400'}`} />
+                        <Monitor
+                          className={`w-4 h-4 ${isSelected ? "text-indigo-400" : "text-gray-400"}`}
+                        />
                         <span className="text-xs font-bold">{preset.name}</span>
                       </div>
-                      {isSelected && <Check className="w-4 h-4 text-indigo-400 shrink-0" />}
+                      {isSelected && (
+                        <Check className="w-4 h-4 text-indigo-400 shrink-0" />
+                      )}
                     </div>
 
                     <div>
@@ -131,15 +137,15 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               Image Format
             </label>
             <div className="grid grid-cols-3 gap-2">
-              {(['png', 'jpeg', 'webp'] as ExportFormat[]).map((fmt) => (
+              {(["png", "jpeg", "webp"] as ExportFormat[]).map((fmt) => (
                 <button
                   key={fmt}
                   type="button"
                   onClick={() => onChangeConfig({ exportFormat: fmt })}
                   className={`py-2.5 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                     config.exportFormat === fmt
-                      ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
-                      : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:text-white'
+                      ? "bg-indigo-600 border-indigo-500 text-white shadow-md"
+                      : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:text-white"
                   }`}
                 >
                   {fmt}
@@ -149,11 +155,12 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           </div>
 
           {/* Transparent BG Info Pill */}
-          {config.backgroundType === 'transparent' && (
+          {config.backgroundType === "transparent" && (
             <div className="p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>
-                <strong>Transparent Background Active:</strong> Exporting transparent PNG file with clean background alpha pixels.
+                <strong>Transparent Background Active:</strong> Exporting transparent PNG
+                file with clean background alpha pixels.
               </span>
             </div>
           )}
@@ -166,12 +173,16 @@ export const ExportModal: React.FC<ExportModalProps> = ({
             onClick={handleCopy}
             className={`px-4 py-2.5 rounded-xl text-xs font-medium border flex items-center gap-2 transition-all cursor-pointer ${
               copied
-                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                : 'bg-white/10 hover:bg-white/15 text-white border-white/15'
+                ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+                : "bg-white/10 hover:bg-white/15 text-white border-white/15"
             }`}
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-            <span>{copied ? 'Copied to Clipboard!' : 'Copy PNG'}</span>
+            {copied ? (
+              <Check className="w-4 h-4 text-emerald-400" />
+            ) : (
+              <Copy className="w-4 h-4" />
+            )}
+            <span>{copied ? "Copied to Clipboard!" : "Copy PNG"}</span>
           </button>
 
           <div className="flex items-center space-x-2">
@@ -193,7 +204,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-indigo-600/30 transition-all cursor-pointer disabled:opacity-50"
             >
               <Download className="w-4 h-4" />
-              <span>{isExporting ? 'Exporting...' : 'Download Image'}</span>
+              <span>{isExporting ? "Exporting..." : "Download Image"}</span>
             </button>
           </div>
         </div>
