@@ -13,10 +13,10 @@ export const ArcFrame: React.FC<FrameProps> = ({ config, children }) => {
 
   return (
     <div
-      className={`w-full overflow-hidden flex flex-col transition-colors duration-200 border ${
+      className={`w-full overflow-hidden flex flex-col transition-colors duration-200 border bg-transparent ${
         isDark
-          ? 'bg-[#18181f] text-gray-200 border-white/10'
-          : 'bg-[#f4f4f7] text-gray-800 border-black/10'
+          ? 'text-gray-200 border-white/10'
+          : 'text-gray-800 border-black/10'
       }`}
     >
       {/* Top Arc Bar */}
@@ -60,7 +60,7 @@ export const ArcFrame: React.FC<FrameProps> = ({ config, children }) => {
       </div>
 
       {/* Content */}
-      <div className="relative w-full overflow-hidden flex-1">{children}</div>
+      <div className="relative w-full overflow-hidden flex-1 p-0 m-0 leading-none">{children}</div>
     </div>
   );
 };
