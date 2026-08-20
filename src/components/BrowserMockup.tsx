@@ -82,11 +82,13 @@ export const BrowserMockup: React.FC<MockupProps> = ({ config, imageSrc }) => {
 
   return (
     <div
-      className={`w-full transition-all duration-200 ${getShadowClass()}`}
+      className={`w-full overflow-hidden transition-all duration-200 ${getShadowClass()}`}
       style={{
         borderRadius: `${config.windowRadius}px`,
         borderWidth: `${config.borderWidth}px`,
         borderColor: config.borderColor,
+        borderStyle: config.borderWidth > 0 ? 'solid' : 'none',
+        overflow: 'hidden',
       }}
     >
       {renderFrame()}

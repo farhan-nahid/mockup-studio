@@ -2,6 +2,7 @@ import React from 'react';
 import type { MockupConfig } from '../../types';
 import { WindowControls } from './WindowControls';
 import { Lock, Sparkles, Command } from 'lucide-react';
+import { getContrastColor } from '../../utils/colorUtils';
 
 interface FrameProps {
   config: MockupConfig;
@@ -9,21 +10,24 @@ interface FrameProps {
 }
 
 export const ArcFrame: React.FC<FrameProps> = ({ config, children }) => {
-  const isDark = config.themeMode === 'dark';
+  const isCustom = config.themeMode === 'custom';
+  const customBg = config.customTabColor || '#2563eb';
+  const isDark = config.themeMode === 'dark' || (isCustom && getContrastColor(customBg) === 'light');
 
   return (
     <div
-      className={`w-full overflow-hidden flex flex-col transition-colors duration-200 border bg-transparent ${
+      className={`w-full overflow-hidden flex flex-col transition-colors duration-200 bg-transparent ${
         isDark
-          ? 'text-gray-200 border-white/10'
-          : 'text-gray-800 border-black/10'
+          ? 'text-gray-200'
+          : 'text-gray-800'
       }`}
     >
       {/* Top Arc Bar */}
       <div
         className={`px-4 py-2.5 flex items-center justify-between gap-3 select-none ${
-          isDark ? 'bg-[#1e1e28]' : 'bg-[#eaeaee]'
+          !isCustom && (isDark ? 'bg-[#1e1e28]' : 'bg-[#eaeaee]')
         }`}
+        style={isCustom ? { backgroundColor: customBg } : undefined}
       >
         <div className="flex items-center space-x-3 shrink-0">
           {config.showControls && (
@@ -36,7 +40,11 @@ export const ArcFrame: React.FC<FrameProps> = ({ config, children }) => {
         {config.showUrlBar ? (
           <div
             className={`flex-1 max-w-md mx-auto h-7 rounded-full px-3 flex items-center justify-between text-xs transition-all border shadow-xs ${
-              isDark
+              isCustom
+                ? isDark
+                  ? 'bg-black/30 text-gray-100 border-white/10'
+                  : 'bg-white/80 text-gray-900 border-black/10 shadow-xs'
+                : isDark
                 ? 'bg-[#121217] text-gray-300 border-indigo-500/20 shadow-indigo-500/5'
                 : 'bg-white text-gray-700 border-black/5'
             }`}

@@ -1,6 +1,6 @@
 export type BrowserType = 'safari' | 'chrome' | 'brave' | 'arc' | 'glass' | 'edge';
 
-export type ThemeMode = 'dark' | 'light';
+export type ThemeMode = 'dark' | 'light' | 'custom';
 
 export type WindowControlsStyle = 'mac' | 'windows' | 'minimal' | 'hidden';
 
@@ -46,6 +46,7 @@ export interface MockupConfig {
   // Browser Frame
   browserType: BrowserType;
   themeMode: ThemeMode;
+  customTabColor?: string;
   url: string;
   title: string;
   showUrlBar: boolean;
