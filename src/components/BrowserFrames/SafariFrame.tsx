@@ -13,8 +13,8 @@ export const SafariFrame: React.FC<FrameProps> = ({ config, children }) => {
 
   return (
     <div
-      className={`w-full overflow-hidden flex flex-col transition-colors duration-200 ${
-        isDark ? 'bg-[#1e1e24] text-gray-200' : 'bg-[#f0f0f3] text-gray-800'
+      className={`w-full overflow-hidden flex flex-col transition-colors duration-200 bg-transparent ${
+        isDark ? 'text-gray-200' : 'text-gray-800'
       }`}
     >
       {/* Top Header */}
@@ -68,7 +68,7 @@ export const SafariFrame: React.FC<FrameProps> = ({ config, children }) => {
       </div>
 
       {/* Main Content Area */}
-      <div className="relative w-full overflow-hidden flex-1">{children}</div>
+      <div className="relative w-full overflow-hidden flex-1 p-0 m-0 leading-none">{children}</div>
     </div>
   );
 };

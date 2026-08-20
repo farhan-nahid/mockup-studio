@@ -20,10 +20,10 @@ export const WindowsEdgeFrame: React.FC<FrameProps> = ({ config, children }) => 
 
   return (
     <div
-      className={`w-full overflow-hidden flex flex-col transition-colors duration-200 border ${
+      className={`w-full overflow-hidden flex flex-col transition-colors duration-200 border bg-transparent ${
         isDark
-          ? 'bg-[#1b1b1f] text-gray-200 border-gray-800'
-          : 'bg-[#f3f3f3] text-gray-800 border-gray-300'
+          ? 'text-gray-200 border-gray-800'
+          : 'text-gray-800 border-gray-300'
       }`}
     >
       {/* Title Bar & Windows Controls */}
@@ -86,7 +86,7 @@ export const WindowsEdgeFrame: React.FC<FrameProps> = ({ config, children }) => 
       </div>
 
       {/* Content */}
-      <div className="relative w-full overflow-hidden flex-1">{children}</div>
+      <div className="relative w-full overflow-hidden flex-1 p-0 m-0 leading-none">{children}</div>
     </div>
   );
 };

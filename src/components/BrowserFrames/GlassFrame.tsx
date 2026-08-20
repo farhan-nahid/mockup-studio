@@ -58,7 +58,7 @@ export const GlassFrame: React.FC<FrameProps> = ({ config, children }) => {
       </div>
 
       {/* Content */}
-      <div className="relative w-full overflow-hidden flex-1">{children}</div>
+      <div className="relative w-full overflow-hidden flex-1 p-0 m-0 leading-none">{children}</div>
     </div>
   );
 };
